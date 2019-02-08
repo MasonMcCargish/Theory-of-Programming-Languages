@@ -1,5 +1,7 @@
 from ast import *
 
-e = AndExpr(NotExpr(True), OrExpr(NotExpr(False), True))
+e = AndExpr(NotExpr(BoolExpr(False)), OrExpr(NotExpr(BoolExpr(False)), BoolExpr(True)))
 
-print (e)
+e = reduce(e)
+
+print(e)
