@@ -51,35 +51,40 @@ def same(e1, e2):
 		return same(e1.lhs, e2.lhs) and same(e1.rhs, e2.rhs);
 
 def is_reducible(e):
-	if type(e) is BoolExpr:
-		return False
-	return True
+	return not (type(e) is BoolExpr)
 
 def step_not(e):
-	
+
 	if(not is_reducible(e.expr)):
 		return(BoolExpr(not e.expr.value))
+
 	else:
 		e.expr = step(e.expr)
 		return e
 
 def step_and(e):
+
 	if(is_reducible(e.lhs)):
 		e.lhs = step(e.lhs)
 		return e
+
 	if(is_reducible(e.rhs)):
 		e.rhs = step(e.rhs)
 		return e
+
 	else:
 		return(BoolExpr(e.lhs.value and e.rhs.value))
 
 def step_or(e):
+
 	if(is_reducible(e.lhs)):
 		e.lhs = step(e.lhs)
 		return e
+
 	if(is_reducible(e.rhs)):
 		e.rhs = step(e.rhs)
 		return e
+
 	else:
 		return(BoolExpr(e.lhs.value or e.rhs.value))
 
@@ -97,6 +102,17 @@ def step(e):
 		return step_or(e)
 
 def reduce(e):
+
 	while(not (type(e) is BoolExpr)):
 		e = step(e)
+
 	return e
+
+def height(e):
+
+	i = 0
+	while(not (type(e) is BoolExpr)):
+		e = step(e)
+		i += 1
+
+	print(counter)
